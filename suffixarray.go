@@ -36,6 +36,9 @@ func New(s string) *Manber {
 	return m
 }
 
+// Build builds a SuffixArray.
+// Building time is O(N (logN)^2) where N is the
+// size of the input string data.
 func (m *Manber) Build() {
 	m.msd()
 	m.doit()
@@ -99,6 +102,10 @@ func (m *Manber) doit() {
 		}
 	}
 }
+
+// -----------------------------------------
+// Helper functions for comparing suffixes.
+// -----------------------------------------
 
 func (m *Manber) quicksort(lo, hi int) {
 	if hi <= lo {
