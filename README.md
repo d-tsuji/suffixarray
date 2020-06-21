@@ -2,7 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/d-tsuji/suffixarray.svg?style=svg)](https://app.circleci.com/pipelines/github/d-tsuji/suffixarray)
 
-Manber&Myers's Suffix Array implementation.
+Manber&Myers's Suffix Array implemented in Go.
 
 -  [U.Manber, G.Myers: "Suffix arrays: a new method for on-line string
     searches", SIAM Journal of Computing, 22巻, 5号(1993), pp. 935-
