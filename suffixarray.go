@@ -1,5 +1,9 @@
 package suffixarray
 
+import (
+	"strings"
+)
+
 type Manber struct {
 	// length of input string
 	N int
@@ -42,6 +46,44 @@ func New(s string) *Manber {
 func (m *Manber) Build() {
 	m.msd()
 	m.doit()
+}
+
+func (m *Manber) LookupAll(p string) []int {
+	var left, right int
+
+	// Find the maximum index where the result of strings.Compare is -1.
+	l := 0
+	r := m.N
+	for r-l > 1 {
+		mid := (l + r) >> 1
+		cmp := strings.Compare(m.Text[m.Index[mid]:min(m.Index[mid]+len(p), m.N)], p)
+		if cmp < 0 {
+			l = mid
+		} else {
+			r = mid
+		}
+	}
+	left = l
+
+	// Find the maximum index where the result of strings.Compare is 0.
+	l = 0
+	r = m.N
+	for r-l > 1 {
+		mid := (l + r) >> 1
+		cmp := strings.Compare(m.Text[m.Index[mid]:min(m.Index[mid]+len(p), m.N)], p)
+		if cmp <= 0 {
+			l = mid
+		} else {
+			r = mid
+		}
+	}
+	right = l
+
+	result := make([]int, 0, right-left)
+	for i := left + 1; i <= right; i++ {
+		result = append(result, m.Index[i])
+	}
+	return result
 }
 
 func (m *Manber) msd() {
@@ -156,4 +198,12 @@ func (m *Manber) exch(i, j int) {
 
 func (m *Manber) less(v, w int) bool {
 	return m.Rank[v+m.offset] < m.Rank[w+m.offset]
+}
+
+func min(a, b int) int {
+	if a < b {
+		return a
+	} else {
+		return b
+	}
 }
